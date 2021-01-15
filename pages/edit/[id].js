@@ -7,12 +7,12 @@ export default function Home({ snippet }) {
         <div>
             <Head>
                 <title>Update Next Snippet</title>
-                <link rel="icon" href="/favicon.ico" />
+                <link rel='icon' href='/favicon.ico' />
             </Head>
 
-            <main className="max-w-lg mx-auto">
-                <h1 className="text-red-100 text-2xl mb-4">Update Snippet</h1>
-                <SnippetForm snippet={snippet} />
+            <main className='max-w-lg mx-auto'>
+                <h1 className='text-red-100 text-2xl mb-4'>Update Snippet</h1>
+                {snippet ? <SnippetForm snippet={snippet} /> : <h1>Loading</h1>}
             </main>
         </div>
     );
@@ -20,9 +20,10 @@ export default function Home({ snippet }) {
 
 export async function getServerSideProps(context) {
     try {
-        //TODO: Get and return snippet as prop
+        const id = context.params.id;
+        const snippet = await getSnippetById(id);
         return {
-            props: {},
+            props: { snippet },
         };
     } catch (error) {
         console.error(error);
